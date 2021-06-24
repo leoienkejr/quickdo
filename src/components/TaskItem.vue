@@ -2,7 +2,7 @@
     <div class="task-item px-10 pt-10 flex column">
         <div class="task-header flex column">
             <span class="task-title">Clean up bedroom</span>
-            <span class="task-due">14/06/2021 23:43</span>
+            <span class="task-due">{{dueDateLocaleStr}}</span>
             
         </div>
         <div class="task-actions flex">
@@ -15,8 +15,30 @@
 </template>
 
 <script>
+import utils from '@/utils/utils.js'
+
 export default {
-    name: 'TaskItem'
+    name: 'TaskItem',
+    data: () => ({
+        utils: utils
+    }),
+    props: {
+        task: {
+            type: Object,
+            default: () => ({
+                dueUnixMilli: 1624491050000,
+                completedAtUnixMilli: 1624476724000,
+            })
+        }
+    },
+    computed: {
+        dueDateLocaleStr(){
+            let date = new Date()
+            date.setTime(this.task.dueUnixMilli)
+            return date.toLocaleString(this.utils.getLocale(), )
+
+        }
+    }
 }
 </script>
 
