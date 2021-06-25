@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import utils from '@/utils/utils.js'
+import {utils} from '@/utils/utils.js'
 
 export default {
     name: 'TaskItem',
