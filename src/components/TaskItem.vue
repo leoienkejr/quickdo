@@ -1,5 +1,6 @@
 <template>
-    <div class="task-item px-10 pt-10 flex column">
+    <div class="task-item px-10 pt-10 flex column"
+    :style="accentColorVar">
         <div class="task-header flex column">
             <span class="task-title">Clean up bedroom</span>
             <span class="task-due">{{dueDateLocaleStr}}</span>
@@ -18,25 +19,38 @@
 import {utils} from '@/utils/utils.js'
 
 export default {
-    name: 'TaskItem',
-    data: () => ({
-        utils: utils
-    }),
     props: {
         task: {
             type: Object,
             default: () => ({
-                dueUnixMilli: 1624491050000,
-                completedAtUnixMilli: 1624476724000,
+                dueUnixTimeMilliseconds: 1624491050000,
+                completedAtUnixTimeMilliseconds: 1624476724000,
             })
+        },
+
+        accentColor: {
+            type: String,
+            default: '#00ccff'
         }
     },
+
+    name: 'TaskItem',
+    data: () => ({
+        utils: utils
+    }),
+
     computed: {
         dueDateLocaleStr(){
             let date = new Date()
-            date.setTime(this.task.dueUnixMilli)
+            date.setTime(this.task.dueUnixTimeMilliseconds)
             return date.toLocaleString(this.utils.getLocale(), )
 
+        },
+
+        accentColorVar(){
+            return {
+                '--accent-color': this.accentColor
+            }
         }
     }
 }
@@ -57,8 +71,13 @@ export default {
 
     .task-item {
         height: 110px;
-        background: lightgrey;
+        background: #FFF;
         border-radius: 0 5px 5px 0;
+        border: 1px solid var(--accent-color);
+        border-left: 8px solid var(--accent-color);
+        -webkit-box-shadow: 4px 4px 5px 0px rgba(163, 91, 91, 0.1);
+        -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
+        box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
 
     }
 
