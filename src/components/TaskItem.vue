@@ -25,12 +25,34 @@ export default {
             default: () => ({
                 dueUnixTimeMilliseconds: 1624491050000,
                 completedAtUnixTimeMilliseconds: 1624476724000,
-            })
+            }),
+            validator: (value) => {
+                let valid = true;
+
+                [   'dueUnixTimeMilliseconds',
+                    'completedAtUnixTimeMilliseconds',
+                ].forEach(key => {
+                   if(!Object.keys(value).includes(key)){
+                        console.warn(`TaskItem: missing property '${key}' in object received as prop 'task'`)
+                        valid = false;
+                   }
+                });
+
+                return valid
+            }
         },
 
         accentColor: {
             type: String,
-            default: '#00ccff'
+            default: '#00ccff',
+            validator: (value) => {
+                if(!value.length > 0){
+                    console.warn("TaskItem: prop 'accentColor' must not be empty")
+                    return false
+                } else {
+                    return true
+                }
+            }
         }
     },
 
