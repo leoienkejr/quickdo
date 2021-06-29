@@ -6,6 +6,8 @@ body {
     padding: 0;
 }
 
+
+/* Padding */
 .px-5 {
     padding: 0 5px 0 5px;
 }
@@ -22,6 +24,8 @@ body {
     padding-top: 10px;
 }
 
+
+/* Flexbox & Margin */
 .flex {
     display: flex;
 }
@@ -42,6 +46,44 @@ body {
     margin-right: 15px;
 }
 
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.align-center {
+    align-items: center;
+}
+
+
+/* Border */
 .br-5 {
     border-radius: 5px;
 }
@@ -52,4 +94,21 @@ body {
 
 .br-15 {
     border-radius: 15px;
+}
+
+
+/* Elements */
+.base-btn {
+    border: unset;
+    background: unset;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Box-shadow */
+.shadow-1 {
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(163, 91, 91, 0.1);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
 }
