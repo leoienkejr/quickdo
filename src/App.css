@@ -97,18 +97,9 @@ body {
 }
 
 
-/* Elements */
-.base-btn {
-    border: unset;
-    background: unset;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-
-
 /* Box-shadow */
 .shadow-1 {
-    -webkit-box-shadow: 4px 4px 5px 0px rgba(163, 91, 91, 0.1);
-    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
-    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(163, 91, 91, 0.05);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.05);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.05);
 }
