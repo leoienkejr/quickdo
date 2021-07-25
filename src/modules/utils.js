@@ -13,8 +13,8 @@ const utils = {
 
         let locale = 'en-US'
 
-        if(storage.getItem('userPreferredLocale')){
-            locale = storage.getItem('userPreferredLocale')
+        if(storage.getItem('preferredLocale')){
+            locale = storage.getItem('preferredLocale')
         } else {
             if(navigator.languages){
                 locale = localeSupported(navigator.languages[0]) ? navigator.languages[0] : locale
@@ -26,10 +26,37 @@ const utils = {
                 locale = localeSupported(navigator.browserLanguage) ? navigator.browserLanguage : locale
             }  else {
                 locale = localeSupported(navigator.systemLanguage) ? navigator.systemLanguage : locale
-            }
+            }  
         }
         
         return locale
+    },
+
+    getTheme(){
+        let theme = 'light'
+
+        if(storage.getItem('preferredTheme')){
+            let themePreference = storage.getItem('preferredTheme')
+
+            if(['dark', 'light'].includes(themePreference)){
+                theme = themePreference
+            } else if (themePreference === 'system'){
+                theme = window.matchMedia('(prefers-color-scheme: dark)') ? 'dark':'light'
+            } else if (themePreference === 'time'){
+                theme = getThemeFromCurrentTime()
+            }
+        } else {
+            storage.setItem('preferredTheme', theme)
+        }
+
+        return theme
+    },
+
+    resetStoredSettings(){
+        storage.removeItem('preferredLocale')
+        storage.setItem('preferredTheme', 'light')
+        storage.setItem('darkThemeStart', '20:00')
+        storage.setItem('darkThemeEnd', '20:00')
     }
 }
 
@@ -43,6 +70,28 @@ function localeSupported(locale){
     }
 
     return supported
+}
+
+function getThemeFromCurrentTime(){
+    let now = new Date()
+    let darkThemeStart = new Date()
+    let darkThemeEnd = new Date()
+    let theme = 'light'
+
+    let darkThemeStartStr= storage.getItem('darkThemeStart')
+    darkThemeStartStr = darkThemeStartStr ? darkThemeStartStr: '20:00'
+    let darkThemeEndStr = storage.getItem('darkThemeEnd')
+    darkThemeEndStr = darkThemeEndStr ? darkThemeEndStr : '06:00'
+
+    darkThemeStart.setHours(darkThemeStartStr.split(':')[0])
+    darkThemeStart.setMinutes(darkThemeStartStr.split(':')[1])
+    darkThemeEnd.setHours(darkThemeEndStr.split(':')[0])
+    darkThemeEnd.setMinutes(darkThemeEndStr.split(':')[1])
+
+    if(now.getTime() >= darkThemeStart.getTime() || now.getTime() <= darkThemeEnd.getTime()){
+        theme = 'dark'
+    }
+    return theme
 }
 
 
