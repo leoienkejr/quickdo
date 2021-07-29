@@ -39,8 +39,8 @@ export default {
         styleVars(){
             return {
                 '--bg-color': this.bgColor,
-                '--width': this.width,
-                '--height': this.equalSides ? this.width : this.height,
+                '--width': this.equalSides ? (this.width ? this.width : this.height) : this.width,
+                '--height': this.equalSides ? (this.width ? this.width : this.height) : this.height,
                 '--border-radius': `${this.borderRadius}px`
             }
         }
