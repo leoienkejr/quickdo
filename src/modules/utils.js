@@ -1,3 +1,5 @@
+import {colors} from '@/modules/vars.js'
+
 // Public
 const storage = window.localStorage;
 
@@ -57,6 +59,16 @@ const utils = {
         storage.setItem('preferredTheme', 'light')
         storage.setItem('darkThemeStart', '20:00')
         storage.setItem('darkThemeEnd', '20:00')
+    },
+
+    getCssColors(){
+        let cssColors = {}
+
+        for (let [key, value] of Object.entries(colors)) {
+            cssColors[`--${camelCaseToSnakeCase(key)}`] = value
+        }
+
+        return cssColors
     }
 }
 
@@ -93,6 +105,16 @@ function getThemeFromCurrentTime(){
     }
     return theme
 }
+
+function camelCaseToSnakeCase(str){
+    // From https://stackoverflow.com/questions/63116039/camelcase-to-kebab-case-in-javascript
+
+    return str.split('').map((letter, idx) => {
+      return letter.toUpperCase() === letter
+       ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
+       : letter;
+    }).join('');
+ }
 
 
 export {utils, storage}
