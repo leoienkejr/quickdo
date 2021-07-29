@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {utils} from '@/modules/utils.js'
+import {mapGetters} from 'vuex'
 import BaseButton from '@/components/BaseButton.vue'
 
 export default {
@@ -85,14 +85,18 @@ export default {
 
     name: 'TaskItem',
     data: () => ({
-        utils: utils
+
     }),
 
     computed: {
+        ...mapGetters({
+            appSettings: 'settings/getAppSettings'
+        }),
+
         dueDateLocaleStr(){
             let date = new Date()
             date.setTime(this.task.dueUnixTimeMilliseconds)
-            return date.toLocaleString(this.utils.getLocale(), {dateStyle: 'short', timeStyle: 'short'})
+            return date.toLocaleString(this.appSettings.locale, {dateStyle: 'short', timeStyle: 'short'})
 
         },
 
