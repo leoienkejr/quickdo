@@ -1,24 +1,51 @@
 <template>
-    <div class="task-item px-10 pt-10 flex column"
+    <div class="task-item px-10 pt-10 flex column shadow-1"
     :style="accentColorVar">
         <div class="task-header flex column">
             <span class="task-title">Clean up bedroom</span>
             <span class="task-due">{{dueDateLocaleStr}}</span>
             
         </div>
-        <div class="task-actions flex">
-            <span class="mr-10">Delete </span>
-            <span class="mr-10">Edit </span>
-            <span class="mr-10">Done </span>
+        <div class="task-actions flex justify-start align-center">
+
+            <base-button class="mr-10"
+            height="2rem">
+                <i class="fas fa-edit"
+                title="Edit"
+                :style="{transform: 'scale(1.2)', opacity: 0.8}"></i>   
+            </base-button>
+
+            <base-button class="mr-10"
+            height="2rem">
+                <i class="fas fa-trash"
+                title="Delete"
+                :style="{opacity: 0.8}"></i>
+            </base-button>
+
+            <base-button class="ml-auto mr-5 mb-10 shadow-1"
+            bg-color="#00ff3f"
+            width="3rem"
+            equal-sides
+            :border-radius="999">
+               <i class="fas fa-check"
+               title="Mark as done"
+               :style="{transform: 'scale(1.8)', opacity: 0.8}"></i>
+            </base-button>
+
         </div>
 
     </div>
 </template>
 
 <script>
-import {utils} from '@/utils/utils.js'
+import {utils} from '@/modules/utils.js'
+import BaseButton from '@/components/BaseButton.vue'
 
 export default {
+    components: {
+        BaseButton
+    },
+
     props: {
         task: {
             type: Object,
@@ -44,7 +71,7 @@ export default {
 
         accentColor: {
             type: String,
-            default: '#00ccff',
+            default: '#0095ff',
             validator: (value) => {
                 if(!value.length > 0){
                     console.warn("TaskItem: prop 'accentColor' must not be empty")
@@ -65,7 +92,7 @@ export default {
         dueDateLocaleStr(){
             let date = new Date()
             date.setTime(this.task.dueUnixTimeMilliseconds)
-            return date.toLocaleString(this.utils.getLocale(), )
+            return date.toLocaleString(this.utils.getLocale(), {dateStyle: 'short', timeStyle: 'short'})
 
         },
 
@@ -97,10 +124,6 @@ export default {
         border-radius: 0 5px 5px 0;
         border: 1px solid var(--accent-color);
         border-left: 8px solid var(--accent-color);
-        -webkit-box-shadow: 4px 4px 5px 0px rgba(163, 91, 91, 0.1);
-        -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
-        box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
-
     }
 
     .task-header {
@@ -109,7 +132,5 @@ export default {
         overflow: hidden;
     }
 
-    .task-actions {
-        justify-content: flex-end;
-    }
+
 </style>
