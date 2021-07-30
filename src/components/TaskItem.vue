@@ -2,7 +2,7 @@
     <div class="task-item px-10 pt-10 flex column shadow-1"
     :style="accentColorVar">
         <div class="task-header flex column">
-            <span class="task-title">Clean up bedroom</span>
+            <span class="task-title">{{task.title}}</span>
             <span class="task-due">{{dueDateLocaleStr}}</span>
             
         </div>
@@ -23,7 +23,7 @@
             </base-button>
 
             <base-button class="ml-auto mr-5 mb-10 shadow-1"
-            bg-color="#00ff3f"
+            :bg-color="colors.primaryGreen"
             width="3rem"
             equal-sides
             :border-radius="999">
@@ -39,6 +39,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import {colors} from '@/modules/vars.js'
 import BaseButton from '@/components/BaseButton.vue'
 
 export default {
@@ -50,13 +51,15 @@ export default {
         task: {
             type: Object,
             default: () => ({
+                title: 'Clean up bedroom',
                 dueUnixTimeMilliseconds: 1624491050000,
                 completedAtUnixTimeMilliseconds: 1624476724000,
             }),
             validator: (value) => {
                 let valid = true;
 
-                [   'dueUnixTimeMilliseconds',
+                [   'title',
+                    'dueUnixTimeMilliseconds',
                     'completedAtUnixTimeMilliseconds',
                 ].forEach(key => {
                    if(!Object.keys(value).includes(key)){
@@ -71,7 +74,7 @@ export default {
 
         accentColor: {
             type: String,
-            default: '#0095ff',
+            default: colors.primaryBlue,
             validator: (value) => {
                 if(!value.length > 0){
                     console.warn("TaskItem: prop 'accentColor' must not be empty")
@@ -85,7 +88,7 @@ export default {
 
     name: 'TaskItem',
     data: () => ({
-
+        colors: colors,
     }),
 
     computed: {

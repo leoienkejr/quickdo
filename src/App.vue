@@ -1,5 +1,7 @@
 <template>
-  <router-view/>
+  <div id="wrapper" :style="utils.getCssColors()">
+    <router-view/>
+  </div>
 </template>
 
 <script>
