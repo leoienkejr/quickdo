@@ -51,6 +51,7 @@ export default {
         task: {
             type: Object,
             default: () => ({
+                id: 1,
                 title: 'Clean up bedroom',
                 dueUnixTimeMilliseconds: 1624491050000,
                 completedAtUnixTimeMilliseconds: 1624476724000,
@@ -58,7 +59,8 @@ export default {
             validator: (value) => {
                 let valid = true;
 
-                [   'title',
+                [   'id',
+                    'title',
                     'dueUnixTimeMilliseconds',
                     'completedAtUnixTimeMilliseconds',
                 ].forEach(key => {
