@@ -37,8 +37,8 @@ const utils = {
     getTheme(){
         let theme = 'light'
 
-        if(storage.getItem('preferredTheme')){
-            let themePreference = storage.getItem('preferredTheme')
+        if(['dark', 'light', 'system', 'time'].includes(storage.getItem('themePreference'))){
+            let themePreference = storage.getItem('themePreference')
 
             if(['dark', 'light'].includes(themePreference)){
                 theme = themePreference
@@ -48,7 +48,7 @@ const utils = {
                 theme = getThemeFromCurrentTime()
             }
         } else {
-            storage.setItem('preferredTheme', theme)
+            storage.setItem('themePreference', theme)
         }
 
         return theme
@@ -56,7 +56,7 @@ const utils = {
 
     resetStoredSettings(){
         storage.removeItem('preferredLocale')
-        storage.setItem('preferredTheme', 'light')
+        storage.setItem('themePreference', 'light')
         storage.setItem('darkThemeStart', '20:00')
         storage.setItem('darkThemeEnd', '20:00')
     },

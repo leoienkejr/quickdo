@@ -4,12 +4,17 @@ import {utils, storage} from '@/modules/utils.js'
 const state = () => ({
     locale: utils.getLocale(),
     theme: utils.getTheme(),
+    themePreference: storage.getItem('themePreference')
 })
 
 // getters
 const getters = {
     getAppSettings(state){
-        return state
+        return state;
+    },
+
+    getThemePreference(state){
+        return state.themePreference;
     }
 }
 
@@ -19,6 +24,7 @@ const actions = {
         const settings = {
             locale: utils.getLocale(),
             theme: utils.getTheme(),
+            themePreference: storage.getItem('themePreference')
         }
 
         context.commit('SET_APP_SETTINGS', {settings: settings})
