@@ -1,6 +1,6 @@
 <template>
     <div class="task-item px-10 pt-10 flex column shadow-1"
-    :style="accentColorVar">
+    :style="{...accentColorVar, ...taskItemStyle}">
         <div class="task-header flex column">
             <span class="task-title">{{task.title}}</span>
             <span class="task-due">{{dueDateLocaleStr}}</span>
@@ -9,27 +9,31 @@
         <div class="task-actions flex justify-start align-center">
 
             <base-button class="mr-10"
-            height="2rem">
+            height="2rem"
+            :style="actionBtnStyle">
                 <i class="fas fa-edit"
                 title="Edit"
                 :style="{transform: 'scale(1.2)', opacity: 0.8}"></i>   
             </base-button>
 
             <base-button class="mr-10"
-            height="2rem">
+            height="2rem"
+            :style="actionBtnStyle">
                 <i class="fas fa-trash"
                 title="Delete"
                 :style="{opacity: 0.8}"></i>
             </base-button>
 
             <base-button class="ml-auto mr-5 mb-10 shadow-1"
-            :bg-color="colors.primaryGreen"
+            :bg-color="doneBtnBgColor"
             width="3rem"
             equal-sides
+            :style="doneBtnBorder"
             :border-radius="999">
                <i class="fas fa-check"
                title="Mark as done"
-               :style="{transform: 'scale(1.8)', opacity: 0.8}"></i>
+               :style="{transform: 'scale(1.8)', opacity: 0.8,
+                color: doneIconColor}"></i>
             </base-button>
 
         </div>
@@ -109,6 +113,43 @@ export default {
             return {
                 '--accent-color': this.accentColor
             }
+        },
+
+        taskItemStyle(){
+            let blackOrWhite = this.appSettings.theme === 'dark' ?
+                this.colors['black'] : this.colors['white']
+
+            let whiteOrBlack = this.appSettings.theme === 'dark' ?
+                this.colors['white'] : this.colors['black']
+
+            return {
+                'background': blackOrWhite,
+                'color': whiteOrBlack,
+            }
+        },
+
+        doneBtnBgColor(){
+            return this.appSettings.theme === 'dark' ?
+                this.colors['black'] : this.colors['primaryGreen']
+        },
+
+        doneIconColor(){
+            return this.appSettings.theme === 'dark' ?
+                this.colors['primaryGreen'] : this.colors['black']
+        },
+
+        doneBtnBorder(){
+            return this.appSettings.theme === 'dark' ? {
+                border: `1px solid ${this.colors['primaryGreen']}`
+            } : {}
+        },
+
+        actionBtnStyle(){
+            return this.appSettings.theme === 'dark' ? {
+                'background': 'transparent',
+                'color': this.colors['white'],
+                'border': '1px solid rgba(255, 255, 255, 0.8)'
+            } : {}
         }
     }
 }
@@ -129,7 +170,7 @@ export default {
 
     .task-item {
         height: 110px;
-        background: #FFF;
+        /* background: #FFF; */
         border-radius: 0 5px 5px 0;
         border: 1px solid var(--accent-color);
         border-left: 8px solid var(--accent-color);

@@ -1,7 +1,8 @@
 <template>
     <div class="pb-10 task-list-wrapper"
     v-if="tasks.length > 0 || !hideEmpty">
-        <div class="task-list-drawer mb-10 flex align-center">
+        <div class="task-list-drawer mb-10 flex align-center"
+        :style="drawerStyle">
             <span class="task-list-title">{{title}}</span>
 
 
@@ -13,7 +14,8 @@
             @click="showTasks = !showTasks">
                 <i :class="drawerIcon"
                     :title="showTasks ? 'Hide tasks':'Show tasks'"
-                    :style="{transform: 'scale(1.2)', opacity: 0.8}"></i>
+                    :style="{transform: 'scale(1.2)', opacity: 0.8,
+                        ...drawerStyle}"></i>
             </base-button>
         </div>
 
@@ -25,7 +27,8 @@
             class="mb-10" />
         </div>
         <div v-show="showTasks && !tasks.length > 0"
-        class="task-list-empty-list-msg-container flex align-center justify-center">
+        class="task-list-empty-list-msg-container flex align-center justify-center"
+        :style="drawerStyle">
             <span class="task-list-empty-list-msg">This list is empty.</span>
         </div>
 
@@ -35,6 +38,7 @@
 
 
 <script>
+    import {mapGetters} from 'vuex'
     import BaseButton from '@/components/BaseButton.vue'
     import TaskItem from '@/components/TaskItem.vue'
     import {colors} from '@/modules/vars.js'
@@ -49,24 +53,6 @@
             tasks: {
                 type: Array,
                 default: () => ([
-                    {
-                        id: 1,
-                        title: 'Clean up bedroom',
-                        dueUnixTimeMilliseconds: 1624491050000,
-                        completedAtUnixTimeMilliseconds: 1624476724000,
-                    },
-                    {
-                        id: 2,
-                        title: 'Clean up bedroom',
-                        dueUnixTimeMilliseconds: 1624491050000,
-                        completedAtUnixTimeMilliseconds: 1624476724000,
-                    },
-                    {
-                        id: 3,
-                        title: 'Clean up bedroom',
-                        dueUnixTimeMilliseconds: 1624491050000,
-                        completedAtUnixTimeMilliseconds: 1624476724000,
-                    }
                 ])
             },
 
@@ -98,11 +84,25 @@
 
         data: () => ({
             showTasks: true,
+            colors: colors,
         }),
 
         computed: {
+            ...mapGetters({
+                appSettings: 'settings/getAppSettings'
+            }),
+
             drawerIcon(){
                 return this.showTasks ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
+            },
+
+            drawerStyle(){
+                let whiteOrBlack = this.appSettings.theme === 'dark' ?
+                    this.colors['white'] : this.colors['black']
+
+                return {
+                    color: whiteOrBlack
+                }
             }
         },
 
